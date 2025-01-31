@@ -33,11 +33,14 @@ public class Produto {
     @Column(name = "nome", nullable = false, length = 255)
     private String nome;
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", columnDefinition = "TEXT")
     private String descricao;
 
     @Column(name = "preco", nullable = false, precision = 10, scale = 2)
     private BigDecimal preco;
+    
+    @Column(name = "quantidade", nullable = false)
+    private Integer quantidade;
 
     @ManyToOne
     @JoinColumn(name = "identificadorTAB_Categoria", nullable = true)

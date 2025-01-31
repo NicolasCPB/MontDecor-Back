@@ -33,6 +33,7 @@ public class ProdutoServiceImpl implements ProdutoService{
 		produto.setDescricao(produtoDTO.descricao());
 		produto.setNome(produtoDTO.nome());
 		produto.setPreco(produtoDTO.preco());
+		produto.setQuantidade(produtoDTO.quantidade());
 		produto.setImagens(new ArrayList<>());
 		
 		for (MultipartFile imagem : imagens) {
@@ -47,5 +48,10 @@ public class ProdutoServiceImpl implements ProdutoService{
 	@Override
 	public List<Produto> getProdutos() {
 		return produtoRepository.findAll();
+	}
+
+	@Override
+	public Produto getProdutoByIdentificador(Long identificador) {
+		return produtoRepository.findById(identificador).get();
 	}
 }

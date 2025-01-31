@@ -11,4 +11,6 @@ public interface ProdutoService {
 	Produto cadastrarProduto(ProdutoDTO produto, List<MultipartFile> imagens);
 
 	List<Produto> getProdutos();
+
+	Produto getProdutoByIdentificador(Long identificador);
 }
