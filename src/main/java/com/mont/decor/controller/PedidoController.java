@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.decor.dto.PedidoDTO;
-import com.mont.decor.service.CarrinhoService;
+import com.mont.decor.service.PedidoService;
 
 @RestController
 @RequestMapping("/carrinho")
-public class CarrinhoController {
+public class PedidoController {
 
 	@Autowired
-	private CarrinhoService service;
+	private PedidoService service;
 	
 	@PostMapping("/finalizarPedido")
     public void finalizarPedido(
