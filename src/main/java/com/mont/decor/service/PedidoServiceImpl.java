@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mont.decor.dto.CarrinhoDTO;
+import com.mont.decor.dto.ItemPedidoDTO;
 import com.mont.decor.dto.PedidoDTO;
 import com.mont.decor.enums.SituacaoProcessamentoEnum;
-import com.mont.decor.model.Carrinho;
+import com.mont.decor.model.ItemPedido;
 import com.mont.decor.model.Pedido;
 import com.mont.decor.model.ProcessamentoPedido;
 import com.mont.decor.repository.ProcessamentoPedidoRepository;
@@ -71,17 +71,17 @@ public class PedidoServiceImpl implements PedidoService{
 		pedido.setNomeUsuario(pedidoDTO.nomeUsuario());
 		pedido.setNumeroUsuario(pedidoDTO.numeroUsuario());
 
-		List<Carrinho> carrinhoList = new ArrayList<Carrinho>();
-		for (CarrinhoDTO carrinhoDTO : pedidoDTO.carrinho()) {
-			Carrinho carrinho = new Carrinho();
+		List<ItemPedido> itens = new ArrayList<ItemPedido>();
+		for (ItemPedidoDTO itemDTO : pedidoDTO.itensPedidos()) {
+			ItemPedido item = new ItemPedido();
 			
-			carrinho.setQuantidade(carrinhoDTO.quantidade());
-			carrinho.setProduto(carrinhoDTO.produto());
+			item.setQuantidade(itemDTO.quantidade());
+			item.setProduto(itemDTO.produto());
 			
-			carrinhoList.add(carrinho);
+			itens.add(item);
 		}
 		
-		pedido.setCarrinhos(carrinhoList);
+		pedido.setItensPedidos(itens);
 		return pedido;
 	}
 }

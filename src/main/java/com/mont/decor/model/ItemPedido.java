@@ -9,7 +9,7 @@ import lombok.Data;
 @Entity
 @Table(name = "TAB_Carrinho")
 @Data
-public class Carrinho {
+public class ItemPedido {
 	
 	@OneToOne
     @JoinColumn(name = "identificadorTAB_Produto", nullable = false)

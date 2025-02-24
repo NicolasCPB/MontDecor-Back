@@ -30,5 +30,5 @@ public class Pedido {
 	
 	@ManyToOne
     @JoinColumn(name = "identificadorTAB_Carrinho", nullable = false)
-    private List<Carrinho> carrinhos;
+    private List<ItemPedido> itensPedidos;
 }
