@@ -30,6 +30,8 @@ public class Usuario {
     @Column(nullable = false, length = 255)
     private String senha;
     
+    private String telefone;
+    
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "UsuarioPerfil",

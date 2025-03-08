@@ -34,19 +34,24 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam(value = "usuario") String usuario, @RequestHeader(value = "senha") String senha) {
+    public ResponseEntity<String> login(@RequestParam(value = "usuario") String usuario, 
+                                                     @RequestHeader(value = "senha") String senha) {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-            		usuario,
+                usuario,
                 senha
             )
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = jwtUtil.generateToken(usuario, authentication.getAuthorities());
+        Usuario usuarioDetalhes = usuarioService.getUsuario(usuario);
+
+        String jwt = jwtUtil.generateToken(usuario, authentication.getAuthorities(), usuarioDetalhes.getTelefone());
+
         return ResponseEntity.ok(jwt);
     }
+
     
     @PostMapping("/register")
     public ResponseEntity<Usuario> criarUsuario(@RequestBody UsuarioDTO dto) {

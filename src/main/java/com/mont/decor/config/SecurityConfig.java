@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .requestMatchers("/categoria/**").permitAll()
                 .requestMatchers("/carrinho/**").permitAll()
                 .requestMatchers("/produto/**").permitAll()
+                .requestMatchers("/actuator/**").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
