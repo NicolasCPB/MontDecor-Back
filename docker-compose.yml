@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mont-decor-app:
     build: .
@@ -27,7 +25,6 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
       timeout: 10s
-      retries: 10
-
+      retries: 10      
 volumes:
   mysql_data:

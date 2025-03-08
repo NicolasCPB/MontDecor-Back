@@ -7,4 +7,6 @@ public interface UsuarioService {
 
 	Usuario criarUsuario(UsuarioDTO dto);
 
+	Usuario getUsuario(String usuario);
+
 }

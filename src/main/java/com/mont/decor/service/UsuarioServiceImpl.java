@@ -27,9 +27,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario criarUsuario(UsuarioDTO dto) {
+    	usuarioRepository.findByNome(dto.nome())
+        .ifPresent(
+            usuario -> { 
+                throw new RuntimeException("Já há um usuário cadastrado com esse nome");
+            }
+        );
+    	
         Usuario usuario = new Usuario();
         usuario.setNome(dto.nome());
         usuario.setSenha(passwordEncoder.encode(dto.senha()));
+        usuario.setTelefone(dto.telefone());
         
         Set<Perfil> perfis = dto.perfisIds().stream()
             .map(perfilRepository::findById)
@@ -39,5 +47,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         
         usuario.setPerfis(perfis);
         return usuarioRepository.save(usuario);
+    }
+    
+    @Override
+    public Usuario getUsuario(String usuario) {
+    	return usuarioRepository.findByNome(usuario).get();
     }
 }

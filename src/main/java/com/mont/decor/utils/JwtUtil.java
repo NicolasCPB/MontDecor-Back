@@ -21,9 +21,10 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(String username, Collection<? extends GrantedAuthority> authorities) {
+    public String generateToken(String username, Collection<? extends GrantedAuthority> authorities, String telefone) {
         return Jwts.builder()
             .subject(username)
+            .claim("telefone", telefone)
             .claim("roles", authorities.stream().map(GrantedAuthority::getAuthority).toList())
             .issuedAt(new Date())
             .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
