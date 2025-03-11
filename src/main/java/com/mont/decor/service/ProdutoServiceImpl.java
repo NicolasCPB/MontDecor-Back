@@ -2,6 +2,7 @@ package com.mont.decor.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,11 @@ import com.mont.decor.dto.ProdutoDTO;
 import com.mont.decor.model.Imagem;
 import com.mont.decor.model.Produto;
 import com.mont.decor.repository.CategoriaRepository;
+import com.mont.decor.repository.ImagemRepository;
 import com.mont.decor.repository.ProdutoRepository;
 import com.mont.decor.service.s3.S3Service;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService{
@@ -25,6 +29,9 @@ public class ProdutoServiceImpl implements ProdutoService{
 	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	
+	@Autowired
+	private ImagemRepository imagemRepository;
 	
 	@Override
 	public Produto cadastrarProduto(ProdutoDTO produtoDTO, List<MultipartFile> imagens) {
@@ -53,5 +60,15 @@ public class ProdutoServiceImpl implements ProdutoService{
 	@Override
 	public Produto getProdutoByIdentificador(Long identificador) {
 		return produtoRepository.findById(identificador).get();
+	}
+	
+	@Override
+	@Transactional
+	public void deleteByIdentificador(Long identificador) {
+		List<Imagem> imagensProduto = imagemRepository.findByProdutoIdentificador(identificador);
+		List<Long> idsImagens = imagensProduto.stream().map(Imagem::getIdentificador).collect(Collectors.toList());
+		imagemRepository.deleteAllById(idsImagens);
+		
+		produtoRepository.deleteById(identificador);
 	}
 }

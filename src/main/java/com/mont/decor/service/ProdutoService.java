@@ -13,4 +13,6 @@ public interface ProdutoService {
 	List<Produto> getProdutos();
 
 	Produto getProdutoByIdentificador(Long identificador);
+
+	void deleteByIdentificador(Long identificador);
 }
