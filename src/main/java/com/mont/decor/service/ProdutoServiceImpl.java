@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,21 +16,19 @@ import com.mont.decor.repository.ProdutoRepository;
 import com.mont.decor.service.s3.S3Service;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ProdutoServiceImpl implements ProdutoService{
 	
-	@Autowired
-    private S3Service s3Service;
+    private final S3Service s3Service;
 	
-	@Autowired
-	private ProdutoRepository produtoRepository;
+	private final ProdutoRepository produtoRepository;
 	
-	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private final CategoriaRepository categoriaRepository;
 	
-	@Autowired
-	private ImagemRepository imagemRepository;
+	private final ImagemRepository imagemRepository;
 	
 	@Override
 	public Produto cadastrarProduto(ProdutoDTO produtoDTO, List<MultipartFile> imagens) {
