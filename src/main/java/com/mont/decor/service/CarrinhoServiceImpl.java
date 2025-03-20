@@ -4,24 +4,26 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mont.decor.dto.CarrinhoDTO;
 import com.mont.decor.dto.PedidoDTO;
 import com.mont.decor.service.email.EmailService;
+import com.mont.decor.service.twilio.TwilioService;
 
 import jakarta.mail.MessagingException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CarrinhoServiceImpl implements CarrinhoService{
 
-	@Autowired
-	private EmailService emailService;
+	private final EmailService emailService;
 	
-	@Autowired
-	private LogService logService;
+	private final LogService logService;
+	
+	private final TwilioService twilioService;
 	
 	@Value("${email.user}")
 	private String destinatario; 
@@ -46,6 +48,7 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 		corpoMensagem.append("\n" + "Valor total do pedido: R$ " + valorTotalPedido.toString());
 		try {
 			emailService.sendEmail(destinatario, "Aluguel MontDecor", corpoMensagem.toString());
+			twilioService.enviarMensagemWhatsapp(corpoMensagem.toString());
 		} catch (MessagingException e) {
 			e.printStackTrace();
 			logService.salvarLog(new Date(), "Ocorreu um erro ao realizar o pedido.", e.getMessage());
