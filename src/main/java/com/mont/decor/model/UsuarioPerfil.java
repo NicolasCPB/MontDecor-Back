@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "UsuarioPerfil")
+@Table(name = "usuarioperfil")
 @Data
 public class UsuarioPerfil {
     @EmbeddedId

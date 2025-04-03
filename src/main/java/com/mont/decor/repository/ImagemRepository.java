@@ -11,4 +11,6 @@ import com.mont.decor.model.Imagem;
 public interface ImagemRepository extends JpaRepository<Imagem, Long>{
 
 	List<Imagem> findByProdutoIdentificador(Long identificadorProduto);
+	
+	void deleteAllByProdutoIdentificador(Long identificadorProduto);
 }

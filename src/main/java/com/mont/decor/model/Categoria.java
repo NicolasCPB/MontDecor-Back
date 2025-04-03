@@ -11,11 +11,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TAB_Categoria")
+@Table(name = "tab_categoria")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Categoria {
+	
+	public static final Long KITS = 3L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.mont.decor.dto.CarrinhoDTO;
 import com.mont.decor.dto.PedidoDTO;
 import com.mont.decor.service.email.EmailService;
-import com.mont.decor.service.twilio.TwilioService;
+import com.mont.decor.service.twilio.WhatsAppService;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 	
 	private final LogService logService;
 	
-	private final TwilioService twilioService;
+	private final WhatsAppService whatsAppService;
 	
 	@Value("${email.user}")
 	private String destinatario; 
@@ -47,9 +47,9 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 		}
 		corpoMensagem.append("\n" + "Valor total do pedido: R$ " + valorTotalPedido.toString());
 		try {
-			emailService.sendEmail(destinatario, "Aluguel MontDecor", corpoMensagem.toString());
-			twilioService.enviarMensagemWhatsapp(corpoMensagem.toString());
-		} catch (MessagingException e) {
+//			emailService.sendEmail(destinatario, "Aluguel MontDecor", corpoMensagem.toString());
+			whatsAppService.enviarMensagem(corpoMensagem.toString());
+		} catch (Exception e) {
 			e.printStackTrace();
 			logService.salvarLog(new Date(), "Ocorreu um erro ao realizar o pedido.", e.getMessage());
 			throw new RuntimeException("Ocorreu um erro ao realizar o pedido.", e);

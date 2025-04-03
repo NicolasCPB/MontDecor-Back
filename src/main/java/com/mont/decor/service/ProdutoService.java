@@ -15,4 +15,6 @@ public interface ProdutoService {
 	Produto getProdutoByIdentificador(Long identificador);
 
 	void deleteByIdentificador(Long identificador);
+
+	void editarProduto(Produto produto, List<MultipartFile> imagens);
 }

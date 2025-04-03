@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,14 @@ public class ProdutoController {
     @DeleteMapping("/delete/{identificador}")
     public HttpEntity<Void> deleteByIdentificador(@PathVariable(name = "identificador") Long identificador) {
     	produtoService.deleteByIdentificador(identificador);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    @PutMapping()
+    public HttpEntity<Void> editarProduto(
+    		@RequestPart("produto") Produto produto,
+            @RequestPart(value ="imagens", required = false) List<MultipartFile> imagens) {
+    	produtoService.editarProduto(produto, imagens);
     	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
