@@ -1,6 +1,9 @@
 package com.mont.decor.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +20,9 @@ public class CarrinhoController {
 	private CarrinhoService service;
 	
 	@PostMapping("/finalizarPedido")
-    public void finalizarPedido(
+    public HttpEntity<Void> finalizarPedido(
             @RequestBody PedidoDTO carrinho) {
 		service.finalizarPedido(carrinho);
-        return;
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

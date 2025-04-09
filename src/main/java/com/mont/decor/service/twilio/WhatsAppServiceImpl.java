@@ -19,9 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WhatsAppServiceImpl implements WhatsAppService {
 	
-	@Value("${evolution.whatsapp-number}")
-	private String WHATSAPP_NUMBER; 
-		
 	@Value("${evolution.api-key}")
 	private String API_KEY;
 	
@@ -30,13 +27,13 @@ public class WhatsAppServiceImpl implements WhatsAppService {
 	
 	private final LogService logService;
 	
-	public void enviarMensagem(String mensagem) {
+	public void enviarMensagem(String mensagem, String numero) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("apikey", API_KEY);
 
         HashMap<String, String> body = new HashMap<>();
-        body.put("number", WHATSAPP_NUMBER);
+        body.put("number", numero);
         body.put("text", mensagem);
         HttpEntity<Object> entity = new HttpEntity<>(body, headers);
 
