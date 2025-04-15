@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class ProdutoController {
 	private ProdutoService produtoService;
 	
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public HttpEntity<Produto> cadastrarProduto(
             @RequestPart("produto") ProdutoDTO produtoDTO,
             @RequestPart("imagens") List<MultipartFile> imagens) {
@@ -46,17 +48,18 @@ public class ProdutoController {
     }
     
     @DeleteMapping("/delete/{identificador}")
+    @PreAuthorize("hasRole('ADMIN')")
     public HttpEntity<Void> deleteByIdentificador(@PathVariable(name = "identificador") Long identificador) {
     	produtoService.deleteByIdentificador(identificador);
     	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     @PutMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     public HttpEntity<Void> editarProduto(
     		@RequestPart("produto") Produto produto,
             @RequestPart(value ="imagens", required = false) List<MultipartFile> imagens) {
     	produtoService.editarProduto(produto, imagens);
     	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
 }

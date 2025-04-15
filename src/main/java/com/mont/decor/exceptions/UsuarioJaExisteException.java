@@ -1,9 +1,9 @@
 package com.mont.decor.exceptions;
 
-public class ProdutoIndisponivelException extends RuntimeException {
+public class UsuarioJaExisteException extends RuntimeException {
 	private static final long serialVersionUID = -2100628754911675601L;
 
-	public ProdutoIndisponivelException(String message) {
+	public UsuarioJaExisteException(String message) {
         super(message);
     }
 }

@@ -9,4 +9,8 @@ public interface UsuarioService {
 
 	Usuario getUsuario(String usuario);
 
+	String login(String usuario, String senha);
+
+	String editarUsuario(UsuarioDTO usuarioDTO);
+
 }

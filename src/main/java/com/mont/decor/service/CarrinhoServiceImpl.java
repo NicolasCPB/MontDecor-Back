@@ -59,7 +59,7 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 		validarAluguel(pedido);
 		String numeroComPrefixo = PREFIXO_BRASIL + pedido.numeroUsuario(); 
 		try {
-//			whatsAppService.enviarMensagem(montaMensagem(pedido), numeroComPrefixo);
+			whatsAppService.enviarMensagem(montaMensagem(pedido), numeroComPrefixo);
 			salvarAluguel(pedido);
 		} catch (Exception e) {
 			e.printStackTrace();

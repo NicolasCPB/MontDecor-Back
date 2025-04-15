@@ -1,13 +1,10 @@
 package com.mont.decor.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,39 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.decor.dto.UsuarioDTO;
 import com.mont.decor.model.Usuario;
 import com.mont.decor.service.UsuarioService;
-import com.mont.decor.utils.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class UsuarioController {
 	
 	private final UsuarioService usuarioService;
 	
-    private final AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam(value = "usuario") String usuario, 
                                                      @RequestHeader(value = "senha") String senha) {
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                usuario,
-                senha
-            )
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        Usuario usuarioDetalhes = usuarioService.getUsuario(usuario);
-
-        String jwt = jwtUtil.generateToken(usuario, authentication.getAuthorities(), usuarioDetalhes.getTelefone());
-
-        return ResponseEntity.ok(jwt);
+        return new ResponseEntity<String>(usuarioService.login(usuario, senha), HttpStatus.OK);
     }
 
     
@@ -61,5 +39,11 @@ public class AuthController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    
+    @PutMapping("/editarUsuario")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<String> editarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+    	return new ResponseEntity<String>(usuarioService.editarUsuario(usuarioDTO), HttpStatus.OK);
     }
 }

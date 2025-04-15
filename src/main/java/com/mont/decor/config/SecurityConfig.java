@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .username(usuario.getNome())
                 .password(usuario.getSenha())
                 .roles(usuario.getPerfis().stream()
-                    .map(perfil -> perfil.getNome().replace("ROLE_", "")) // Remove prefixo se necessário
+                    .map(perfil -> perfil.getNome().replace("ROLE_", ""))
                     .toArray(String[]::new))
                 .build())
             .orElseThrow(() -> new org.springframework.security.core.userdetails.UsernameNotFoundException("Usuário não encontrado"));
