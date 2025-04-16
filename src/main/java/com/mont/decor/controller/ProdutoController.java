@@ -30,7 +30,7 @@ public class ProdutoController {
 	private ProdutoService produtoService;
 	
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public HttpEntity<Produto> cadastrarProduto(
             @RequestPart("produto") ProdutoDTO produtoDTO,
             @RequestPart("imagens") List<MultipartFile> imagens) {
@@ -48,14 +48,14 @@ public class ProdutoController {
     }
     
     @DeleteMapping("/delete/{identificador}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public HttpEntity<Void> deleteByIdentificador(@PathVariable(name = "identificador") Long identificador) {
     	produtoService.deleteByIdentificador(identificador);
     	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     @PutMapping()
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public HttpEntity<Void> editarProduto(
     		@RequestPart("produto") Produto produto,
             @RequestPart(value ="imagens", required = false) List<MultipartFile> imagens) {
